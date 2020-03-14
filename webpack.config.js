@@ -1,11 +1,12 @@
-const path = require('path');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin}  =require('clean-webpack-plugin');
+const path = require('path')
+const HTMLWebpackPlugin = require('html-webpack-plugin')
+const {CleanWebpackPlugin}  =require('clean-webpack-plugin')
 
 module.exports = {
+	context: path.resolve(__dirname, 'src'),
 	mode: 'development',
 	entry: {
-		main: './src/index.js',
+		main: './index.js',
 
 	},
 	output: {
@@ -14,8 +15,28 @@ module.exports = {
 	},
 	plugins: [
 		new HTMLWebpackPlugin({
-			template: './src/index.html'
+			template: './index.html'
 		}),
 		new CleanWebpackPlugin()
-	]
+	],
+	module: {
+		rules: [
+			{
+				test: /\.css$/,
+				use: ['style-loader', 'css-loader']
+			},
+			{
+				test: /\.(png|jpg|svg|gif|webp)$/,
+				use: ['file-loader']
+			},
+			{
+				test: /\.(ttf|woff|woff2|eot)$/,
+				use: ['file-loader']
+			},
+			{
+				test: /\.xml$/,
+				use: ['xml-loader']
+			}
+		]
+	}
 }
